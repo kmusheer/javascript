@@ -6,7 +6,81 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style/notes.css">
+<!--     <link rel="stylesheet" href="style/notes.css"> -->
+    <style>
+        .container{
+    background-color: aqua;
+    margin: auto;
+}
+.subconent{
+    display: flex;
+    justify-content: center;
+}
+#notes{
+    background-color: aqua;
+    margin: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+input[type=submit]{
+    background: #000;
+    color: white; margin: 20px;
+    font-size: 18px;
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type=submit]:hover{
+    background-color: green;
+}
+ol{
+    display: block;
+}
+ul{
+    display: flex;
+    justify-content: space-around;
+}
+.list{
+    background-color: lightblue;
+    width: 80vw;
+    color: brown;
+    font-size: 20px;
+    cursor: pointer;
+    text-transform: capitalize;
+    padding: 0rem 1rem 0rem 1rem ;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.span{
+    background-color: lightblue;
+    padding: .2rem 1rem .3rem 1rem ;
+    font-weight: bold;
+    cursor: pointer;
+}
+.span:hover{
+    background-color: red;
+}
+.list:nth-child(odd){
+    background-color: wheat;
+}
+.list:hover{
+    color: white;
+    background-color: rgb(42, 38, 38);
+}
+.classList{
+    text-decoration: line-through;
+    color: red;
+}
+#addText{
+    font-size: 20px;
+    font-weight: bold;
+    white-space: 2;
+    color: rgb(104, 1, 1);
+    text-align: center;
+}
+    </style>
 </head>
 
 <body>
@@ -23,8 +97,75 @@
             </ul>
         </div>
     </div>
-    <script src="script/notes.js"></script>
+<!--     <script src="script/notes.js"></script> -->
+    
+    
     <script>
+
+var todoArr = [];
+
+function addTodoList() {
+    var li = document.createElement('li');
+    li.className = 'list';
+    li.onclick = linefunc;
+    const store = document.getElementById('notes').value;
+    let storeNode = document.createTextNode(store);
+    li.appendChild(storeNode);
+
+    let todo = {
+        description: document.getElementById('notes').value,
+        completed : false
+    }
+    todoArr.push(todo);
+    console.log(todoArr);
+
+
+    var message1 = document.getElementById('addText').innerText = "Your text is saving in list";
+    setTimeout(function (){
+        message1 = document.getElementById('addText').innerText = "";
+        }, 3000);
+    if (document.getElementById('notes').value == "") {
+        let message = document.getElementById('addText').innerText = "please enter your text";
+        setTimeout(function (){
+            message = document.getElementById('addText').innerText = "";
+        }, 3000);    
+    }
+
+    else {
+        document.getElementById('ul').appendChild(li);
+        var span = document.createElement('span');
+        span.innerText = 'X';
+        span.onclick = removefunc;
+        span.className = 'span';
+        li.appendChild(span);
+
+    }
+    store = document.getElementById('notes').value = '';
+
+    function removefunc() {
+        li.remove();
+        span.remove(this);
+
+//         todoArr = todoArr.filter(ellist => ellist !== li);
+//         console.log(todoArr);
+    }
+    function linefunc() {
+        li.classList.toggle('classList');
+}
+
+
+
+function clearfunc() {
+    document.getElementById('ul').innerText = '';
+}
+
+function focusfunc(x) {
+    x.style.background = 'yellow';
+}
+function blurfunc() {
+    document.getElementById('notes').style.background = 'brown';
+}
+
       
     </script>
 </body>
