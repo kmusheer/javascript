@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form validations</title>
+    <link rel="stylesheet" href="style/formValid.css">
+</head>
+
+<body>
+    <div id="container">
+        <h1>Fill this form for registration</h1>
+        <form action="#" id="formName">
+            <label for="name">Name :</label><br>
+            <input type="text" id="name" name="name" placeholder="enter UR Name" required><br>
+            <label for="email">Email :</label><br>
+            <input type="email" id="email" name="email" placeholder="enter UR Email" required><br>
+            <label for="num">Phone number :</label><br>
+            <input type="number" id="num" name=" number" placeholder="enter UR Number" required><br>
+            <label for="pwd">Password :</label><br>
+            <input type="password" id="pwd" name="pwd" placeholder="enter UR Password" minlength="6" maxlength="10" required><br>
+            <label for="" class="chkbox">Show Password :</label>
+            <input type="checkbox" class="chkbox" onclick="showPwd()"> <br>
+            <input type="submit" value="Submit" onclick="submitForm()">
+        </form>
+        <div id="val"></div>
+    </div>
+    <script src="script/formValid.js"></script>
+</body>
+
+</html>
