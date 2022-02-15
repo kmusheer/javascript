@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SetDate</title>
+</head>
+
+<body>
+    <h1>Digital clock</h1>
+    <div id="clk"></div><br><br>
+    <div id="clk1"></div>
+    <script>
+        function displayTime() {
+
+            let time = new Date();
+            let h = time.getHours();
+            let m = time.getMinutes();
+            let s = time.getSeconds();
+            let session = "AM";
+            if (h === 0) {
+                h = 12;
+            }
+            if (h > 12) {
+                h -= 12;
+                session = "PM";
+            }
+            if (h < 10) {
+                h = "0" + h;
+            }
+            if (m < 10) {
+                m = "0" + m;
+            }
+            if (s < 10) {
+                s = "0" + s;
+            }
+            setTimeout(() => {
+                displayTime();
+            }, 1000);
+            // console.log(h + ":" + m + ":" + s + " " + session);
+            let clock = h + ":" + m + ":" + s + " " + session;
+            document.getElementById('clk').innerText = clock;
+        }
+        displayTime();
+
+        // console.log(time.getHours()+"/"+ time.getMinutes()+"/"+time.getSeconds());
+
+        const d = new Date();
+        d.setHours(9);
+        d.setMinutes(23);
+        d.setSeconds(45)
+
+        document.getElementById('clk1').innerText = d;
+        console.log(d);
+    </script>
+</body>
+
+</html>
