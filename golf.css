@@ -1,0 +1,61 @@
+.container {
+    margin: 0;
+    padding: 0;
+}
+#ball {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 200px;
+}
+#img {
+    width: 67px;
+    height: 50px;
+    /* margin-top: 90px; */
+}
+i {
+    font-size: 150px;
+}
+.moved{
+    border: 5px solid black;
+    border-radius: 100px;
+    height: 80px;
+    width: 80px;
+    background-color: yellow;
+    box-shadow: 2px 2px 13px 0px black;
+}
+.btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+button{
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    background-color: black;
+    padding: 6px 11px;
+    margin: 5px 7px;
+    font-size: 20px;
+}
+button:hover{background-color: green;}
+button:focus{
+    font-size: 22px;
+    background-color: rgb(221, 246, 80);
+    color: black;
+}
+.img1 {
+    animation: ballMove;
+    animation-duration: 6s;
+    animation-play-state:running;
+    /* animation-iteration-count: ; */
+}
+@keyframes ballMove {
+    5% {
+        transform: translate(0px);
+    }
+    100% {
+        transform: translate(640px, 30px);
+    }
+}
+/* .paused {
+    animation-play-state: paused;
+  } */
