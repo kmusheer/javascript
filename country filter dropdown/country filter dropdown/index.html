@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Filter</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            width: 200px;
+            height: 300px;
+            /* background-color: red; */
+            border: 1px solid black;
+            /* padding: 10px; */
+        }
+
+        .box img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .box h1 {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .box h4 {
+            text-align: center;
+            font-size: 15px;
+        }
+
+
+        .box .show {
+            display: block;
+        }
+
+        .searchbar {
+            display: flex;
+            justify-content: space-around;
+
+        }
+
+        .searchInput {
+            width: 300px;
+            height: 40px;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 18px;
+            margin: 20px 40px;
+            background-color: white;
+        }
+
+        .dropdown {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 18px;
+            margin: 20px 40px;
+            width: 300px;
+            height: 40px;
+        }
+
+
+        .pagination {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .pagination a {
+            color: #007BFF;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #007BFF;
+            margin: 0 5px;
+            border-radius: 4px;
+        }
+
+        .pagination a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .pagination .active {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="searchbar">
+        <input type="text" name="" class="searchInput" id="searchInput" placeholder="search for a country">
+
+        <div>
+            <input type="text" name="selectName" class="dropdown" id="searchName" autocomplete="on" list="selectName"
+                placeholder="select country">
+            <datalist id="selectName">
+            </datalist>
+        </div>
+
+    </div>
+    <div class="container" id="container">
+        <!-- <div class="box" id="box"></div> -->
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+
+    <script>
+        const itemsPerPage = 10
+        let currentPage = 1;
+        let data = []; // Array to store fetched data
+        let filteredData = []; // Array to store filter data
+
+        let boxContainer = document.getElementById('container');
+        let searchInput = document.getElementById('searchInput');
+        let searchName = document.getElementById('searchName');
+
+        function renderItems() {
+            boxContainer.innerHTML = '';
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const lastIndexing = startIndex + itemsPerPage
+            // const items = data.slice(startIndex, lastIndexing);
+            const items = filteredData.slice(startIndex, lastIndexing);
+
+            console.log('items :>> ', items);
+
+            const selectName = document.getElementById("selectName");
+            selectName.innerHTML = ''; // Clear previous options
+            data.forEach(item => {
+                const option = document.createElement("option");
+                option.textContent = item.name;
+                selectName.appendChild(option);
+            });
+
+            items.forEach(item => {
+
+                const box = document.createElement('div');
+                box.classList.add('box');
+
+                const image = document.createElement('img');
+                image.src = item.flag;
+                box.appendChild(image);
+
+                const title = document.createElement('h1');
+                title.textContent = item.name;
+                box.appendChild(title);
+
+                const population = document.createElement('h4');
+                population.textContent = `Population: ${item.population}`;
+                box.appendChild(population);
+
+                const region = document.createElement('h4');
+                region.textContent = `Region: ${item.region}`;
+                box.appendChild(region);
+
+                const capital = document.createElement('h4');
+                capital.textContent = `Capital: ${item.capital}`;
+                box.appendChild(capital);
+
+                boxContainer.appendChild(box);
+            });
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            const paginationElement = document.getElementById('pagination');
+            paginationElement.innerHTML = ''; // Clear previous pagination
+
+
+            for (let i = 1; i <= totalPages; i++) {
+                // console.log('totalpages[i] :>> ', i[totalPages]);
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = i;
+                link.dataset.page = i;
+                link.classList.add('page-link');
+                if (i == currentPage) {
+                    link.classList.add('active');
+                }
+                paginationElement.appendChild(link);
+            }
+        }
+
+        function applySearchFilter() {
+            const searchText = searchInput.value.trim().toLowerCase();
+            const searchNameText = searchName.value.trim().toLowerCase();
+
+            filteredData = data.filter(item => {
+                const title = item.name.toLowerCase();
+                return title.includes(searchText) && title.includes(searchNameText);
+            });
+
+            currentPage = 1;
+            renderItems();
+            renderPagination();
+        }
+
+        document.getElementById('pagination').addEventListener('click', (e) => {
+            if (e.target?.classList.contains('page-link')) {
+                currentPage = parseInt(e.target.dataset.page);
+                renderItems();
+                renderPagination();
+            }
+        })
+
+        searchInput.addEventListener('input', applySearchFilter);
+        searchName.addEventListener('input', applySearchFilter);
+
+        fetch('country.json')
+            .then(res => res.json())
+            .then(json => {
+                data = json;
+                console.log('data :>> ', data);
+                filteredData = data;
+                renderItems();
+                renderPagination();
+            })
+            .catch(err => console.error('Error fetching data:', err));
+
+    </script>
+
+
+</body>
+
+</html>
