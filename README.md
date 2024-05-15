@@ -49,3 +49,22 @@ To run the application locally, follow these steps:
 
    ```bash
    git clone https://github.com/kmusheer/javascript/country-data-search.git
+2. Navigate to the project directory:
+   ```bash
+   cd country-data-search
+4. Open the index.html file in your web browser.
+5. Start exploring the search and pagination functionalities!
+
+## Credits
+
+- **HTML, CSS, and JavaScript**: Used for the front-end development of the project.
+- **Fetch API**: Utilized to retrieve data from the local JSON file.
+- **John Doe**: Provided valuable feedback and suggestions during the development process.
+
+## License
+
+This project is licensed under the MIT License.
+
+```bash
+Make sure to replace the placeholder text in the README with actual descriptions and paths to your screenshots. This README provides an overview of the project, its features, how to get started, credits, and licensing information.
+
